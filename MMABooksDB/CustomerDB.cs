@@ -73,7 +73,42 @@ public IBaseProps Create(IBaseProps p)
 */
         public IBaseProps Retrieve(object key)
         {
-            throw new NotImplementedException();
+            DBDataReader data = null;
+            CustomerProps props = new CustomerProps();
+            DBCommand command = new DBCommand();
+
+            command.CommandText = "usp_CustomerSelect";
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("CustId", DBDbType.Int32);
+            command.Parameters["CustId"].Value = (int)key;
+
+            try
+            {
+                data = RunProcedure(command);
+                if (!data.IsClosed)
+                {
+                    if (data.Read())
+                    {
+                        props.SetState(data);
+                    }
+                    else
+                        throw new Exception("Record does not exist in the database.");
+                }
+                return props;
+            }
+            catch (Exception e)
+            {
+                // log this exception
+                throw;
+            }
+            finally
+            {
+                if (data != null)
+                {
+                    if (!data.IsClosed)
+                        data.Close();
+                }
+            }
         }
 
         public object RetrieveAll()
@@ -104,6 +139,11 @@ public IBaseProps Create(IBaseProps p)
          * end //
          * Delimitter //
          * 
+         * in the database take the given customer procedures, c+p them and 
+         * change everything in them to state procedures
+         * 
+         * 
+         * in VS run test, then in mysql run stateselect and reset before each procedure
          */
     }
 }

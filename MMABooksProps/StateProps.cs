@@ -51,8 +51,7 @@ namespace MMABooksProps
         {
             this.Code = ((string)dr["StateCode"]).Trim();
             this.Name = (string)dr["StateName"];
-            this.CustomerID = (int)dr["CustomerID"];
-            this.Name
+            
             this.ConcurrencyID = (Int32)dr["ConcurrencyID"];
         }
     }
