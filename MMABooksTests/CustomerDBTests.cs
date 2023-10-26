@@ -25,6 +25,14 @@ namespace MMABooksTests
             db.RunNonQueryProcedure(command);
         }
 
+        [Test]
+        public void TestRetrieve()
+        {
+            CustomerProps p = (CustomerProps)db.Retrieve(1);
+            Assert.AreEqual(1, p.CustomerID);
+            Assert.AreEqual("Molunguri, A", p.Name);
+        }
+
 
     }
 }
