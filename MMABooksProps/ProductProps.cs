@@ -9,7 +9,7 @@ using System.Text.Json.Serialization;
 namespace MMABooksProps
 {
     [Serializable()]
-    public class CustomerProps : IBaseProps
+    public class ProductProps : IBaseProps
     {
         #region Auto-implemented Properties
         public int CustomerID { get; set; } = 0;
@@ -27,7 +27,7 @@ namespace MMABooksProps
         #endregion
         public object Clone()
         {
-            CustomerProps p = new CustomerProps();
+            ProductProps p = new ProductProps();
             p.CustomerID = this.CustomerID;
             p.Name = this.Name;
             p.Address = this.Address;
@@ -40,16 +40,16 @@ namespace MMABooksProps
         }
 
         // this is always the same ... so I should have made IBaseProps and abstract class
-        public string GetCustomer()
+        public string GetState()
         {
             string jsonString;
             jsonString = JsonSerializer.Serialize(this);
             return jsonString;
         }
 
-        public void SetCustomer(string jsonString)
+        public void SetProduct(string jsonString)
         {
-            CustomerProps p = JsonSerializer.Deserialize<CustomerProps>(jsonString);
+            ProductProps p = JsonSerializer.Deserialize<ProductProps>(jsonString);
             this.CustomerID = p.CustomerID;
             this.Name = p.Name;
             this.Address = p.Address;
@@ -60,7 +60,7 @@ namespace MMABooksProps
             this.ConcurrencyID = p.ConcurrencyID;
         }
 
-        public void SetCustomer(DBDataReader dr)
+        public void SetProduct(DBDataReader dr)
         {
             
             this.CustomerID = (int)dr["CustomerID"];
